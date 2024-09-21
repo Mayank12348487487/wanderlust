@@ -1,0 +1,113 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="container mx-auto pt-[8rem] px-4 sm:px-6 lg:px-8">
+    <form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="w-full sm:w-3/4 lg:w-1/2 mx-auto p-6 border-2 border-gray-300 rounded-lg bg-white space-y-4" onsubmit="return validateForm()" enctype="multipart/form-data">
+        
+        <!-- Title -->
+        <div>
+            <input type="text" name="listing[title]" id="title" placeholder="Enter Title" class="w-full p-2 border border-gray-400 rounded" value="<%= listing.title %>">
+            <p id="title-error" class="text-red-500 text-sm hidden">Title is required.</p>
+        </div>
+        
+        <!-- Image -->
+        <div>
+            <div>
+                <img src="<%= listing.image.url %>" alt="image" class="mb-2">
+            </div>
+            <input type="file" name="listing[image]" id="image" class="w-full p-2 border border-gray-400 rounded">
+        </div>
+        
+        <!-- Description -->
+        <div>
+            <textarea name="listing[description]" id="description" placeholder="Enter Info About Listing" cols="30" rows="5" class="w-full p-2 border border-gray-400 rounded"><%= listing.description %></textarea>
+            <p id="description-error" class="text-red-500 text-sm hidden">Description is required.</p>
+        </div>
+        
+        <!-- Price and Category in the Same Row -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Price -->
+            <div>
+                <input type="number" name="listing[price]" id="price" placeholder="Enter Price" class="w-full p-2 border border-gray-400 rounded" value="<%= listing.price %>">
+                <p id="price-error" class="text-red-500 text-sm hidden">Price is required.</p>
+            </div>
+
+            <!-- Category Dropdown -->
+            <div>
+                <select name="listing[category]" id="category" class="w-full p-2 border border-gray-400 rounded">
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Amazing Pools" <% if (listing.category === 'Amazing Pools') { %> selected <% } %>>Amazing Pool</option>
+                    <option value="Camping" <% if (listing.category === 'Camping') { %> selected <% } %>>Camping</option>
+                    <option value="Lakefront" <% if (listing.category === 'Lakefront') { %> selected <% } %>>Lakefront</option>
+                    <option value="Farms" <% if (listing.category === 'Farms') { %> selected <% } %>>Farms</option>
+                    <!-- Add other categories as needed -->
+                    <option value="Beach Front" <% if (listing.category === 'Beach Front') { %> selected <% } %>>Beach Front</option>
+                    <option value="Mountain" <% if (listing.category === 'Mountain') { %> selected <% } %>>Mountain</option>
+                    <option value="Desert" <% if (listing.category === 'Desert') { %> selected <% } %>>Desert</option>
+                    <option value="Country Side" <% if (listing.category === 'Country Side') { %> selected <% } %>>Country Side</option>
+                    <option value="Forest" <% if (listing.category === 'Forest') { %> selected <% } %>>Forest</option>
+                    <option value="Vineyard" <% if (listing.category === 'Vineyard') { %> selected <% } %>>Vineyard</option>
+                    <option value="Historic" <% if (listing.category === 'Historic') { %> selected <% } %>>Historic</option>
+                    <option value="Modern" <% if (listing.category === 'Modern') { %> selected <% } %>>Modern</option>
+                    <option value="Luxury" <% if (listing.category === 'Luxury') { %> selected <% } %>>Luxury</option>
+                    <option value="Budget" <% if (listing.category === 'Budget') { %> selected <% } %>>Budget</option>
+                    <option value="Urban" <% if (listing.category === 'Urban') { %> selected <% } %>>Urban</option>
+                </select>
+                <p id="category-error" class="text-red-500 text-sm hidden">Category is required.</p>
+            </div>
+        </div>
+
+        <!-- Location and Country in the Same Row -->
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <input type="text" name="listing[location]" id="location" placeholder="Enter Location" class="w-full p-2 border border-gray-400 rounded" value="<%= listing.location %>">
+                <p id="location-error" class="text-red-500 text-sm hidden">Location is required.</p>
+            </div>
+            <div>
+                <input type="text" name="listing[country]" id="country" placeholder="Enter Country" class="w-full p-2 border border-gray-400 rounded" value="<%= listing.country %>">
+                <p id="country-error" class="text-red-500 text-sm hidden">Country is required.</p>
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4">
+            Edit
+        </button>
+    </form>
+</div>
+
+<script>
+    // Client-side form validation
+    function validateForm() {
+        let valid = true;
+
+        // Get form elements
+        const title = document.getElementById('title');
+        const description = document.getElementById('description');
+        const price = document.getElementById('price');
+        const category = document.getElementById('category');
+        const location = document.getElementById('location');
+        const country = document.getElementById('country');
+
+        // Helper function to validate each field
+        function validateField(field, errorElementId) {
+            if (!field.value.trim()) {
+                field.classList.add('border-red-500');
+                document.getElementById(errorElementId).classList.remove('hidden');
+                valid = false;
+            } else {
+                field.classList.remove('border-red-500');
+                document.getElementById(errorElementId).classList.add('hidden');
+            }
+        }
+
+        // Validate each field
+        validateField(title, 'title-error');
+        validateField(description, 'description-error');
+        validateField(price, 'price-error');
+        validateField(category, 'category-error');
+        validateField(location, 'location-error');
+        validateField(country, 'country-error');
+
+        return valid;
+    }
+</script>

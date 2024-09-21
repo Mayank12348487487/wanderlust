@@ -1,0 +1,48 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="bg-gray-100 flex justify-center items-center h-screen bg-cover bg-center" style="background-image: url('https://d6xcmfyh68wv8.cloudfront.net/blog-content/uploads/2020/10/Card-pre-launch_blog-feature-image1.png');">
+  <div class="w-full max-w-md p-6 bg-white bg-opacity-90 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Book Now & Enjoy</h2>
+    
+    <form>
+      <!-- Cardholder Name -->
+      <div class="mb-4">
+        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Cardholder Name</label>
+        <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="John Doe">
+      </div>
+      
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+        <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="john.doe@example.com">
+      </div>
+      
+      <!-- Card Number -->
+      <div class="mb-4">
+        <label for="card-number" class="block text-gray-700 text-sm font-bold mb-2">Card Number</label>
+        <input type="text" id="card-number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="1234 1234 1234 1234">
+      </div>
+      
+      <!-- Expiration Date and CVC -->
+      <div class="flex space-x-4">
+        <div class="mb-4 w-1/2">
+          <label for="expiry-date" class="block text-gray-700 text-sm font-bold mb-2">Expiry Date</label>
+          <input type="text" id="expiry-date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="MM/YY">
+        </div>
+        <div class="mb-4 w-1/2">
+          <label for="cvc" class="block text-gray-700 text-sm font-bold mb-2">CVC</label>
+          <input type="text" id="cvc" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="CVC">
+        </div>
+      </div>
+      
+      <!-- Price -->
+      <div class="mb-4">
+        <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Price</label>
+        <input type="text" id="price" value="&#8377;<%= listing.price.toLocaleString("en-In") %>" readonly class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none">
+      </div>
+      
+      <!-- Payment Button -->
+      <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Pay Now</button>
+    </form>
+  </div>
+</div>

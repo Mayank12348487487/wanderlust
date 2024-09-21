@@ -1,0 +1,129 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<style>
+    body {
+        font-family: "Signika Negative", sans-serif;
+    }
+
+    /* Optional: Style the dropdown a little more */
+    select:focus {
+        outline: none;
+        border-color: #2563eb; /* Tailwind Blue */
+        box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+    }
+
+    option {
+        color: #111827; /* Dark Gray text */
+    }
+</style>
+
+<h1 class="pt-20 text-5xl text-center">Rent Your Hotel</h1>
+
+<div class="container mx-auto pt-[2rem] px-4 sm:px-6 lg:px-8">
+    <form action="/listings" method="POST" class="w-full sm:w-3/4 lg:w-1/2 mx-auto p-6 border-2 border-gray-300 rounded-lg bg-white space-y-4" onsubmit="return validateForm()" enctype="multipart/form-data">
+        
+        <!-- Title -->
+        <div>
+            <input type="text" name="listing[title]" id="title" placeholder="Enter Title" class="w-full p-2 border border-gray-400 rounded">
+            <p id="title-error" class="text-red-500 text-sm hidden">Title is required.</p>
+        </div>
+        
+        <!-- Image URL -->
+        <div>   
+            <input type="file" name="listing[image]" id="image" class="w-full p-2 border border-gray-400 rounded" required>
+            <p id="image-error" class="text-red-500 text-sm hidden">Image URL is required.</p>
+        </div>
+        
+        <!-- Description -->
+        <div>
+            <textarea name="listing[description]" id="description" placeholder="Enter Info About Listing" cols="30" rows="5" class="w-full p-2 border border-gray-400 rounded"></textarea>
+            <p id="description-error" class="text-red-500 text-sm hidden">Description is required.</p>
+        </div>
+        
+        <!-- Price and Category in the Same Row -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Price -->
+            <div>
+                <input type="number" name="listing[price]" id="price" placeholder="Enter Price" class="w-full p-2 border border-gray-400 rounded">
+                <p id="price-error" class="text-red-500 text-sm hidden">Price is required.</p>
+            </div>
+
+            <!-- Enhanced Category Dropdown -->
+            <div>
+                <select name="listing[category]" id="category" class="w-full p-2 border border-gray-400 rounded bg-gray-50 focus:border-blue-500 focus:ring-blue-500">
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Amazing Pools">Amazing Pools</option>
+                    <option value="Camping">Camping</option>
+                    <option value="Lake Front">Lake Front</option>
+                    <option value="Farms">Farms</option>
+                    <option value="Beach Front">Beach Front</option>
+                    <option value="Mountain">Mountain</option>
+                    <option value="Desert">Desert</option>
+                    <option value="Country Side">Country Side</option>
+                    <option value="Forest">Forest</option>
+                    <option value="Vineyard">Vineyard</option>
+                    <option value="Historic">Historic</option>
+                    <option value="Modern">Modern</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="Budget">Budget</option>
+                    <option value="Urban">Urban</option>
+                </select>
+                <p id="category-error" class="text-red-500 text-sm hidden">Category is required.</p>
+            </div>
+        </div>
+        
+        <!-- Location and Country in the Same Row -->
+        <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
+            <div>
+                <input type="text" name="listing[location]" id="location" placeholder="Enter Location" class="w-full p-2 border border-gray-400 rounded">
+                <p id="location-error" class="text-red-500 text-sm hidden">Location is required.</p>
+            </div>
+            <div>
+                <input type="text" name="listing[country]" id="country" placeholder="Enter Country" class="w-full p-2 border border-gray-400 rounded">
+                <p id="country-error" class="text-red-500 text-sm hidden">Country is required.</p>
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4">
+            Add Listing
+        </button>
+    </form>
+</div>
+
+<script>
+    // Client-side form validation
+    function validateForm() {
+        let valid = true;
+
+        // Get form elements
+        const title = document.getElementById('title');
+        const image = document.getElementById('image');
+        const description = document.getElementById('description');
+        const price = document.getElementById('price');
+        const location = document.getElementById('location');
+        const country = document.getElementById('country');
+        const category = document.getElementById('category');
+
+        // Helper function to validate each field
+        function validateField(field, errorElementId) {
+            if (!field.value.trim()) {
+                field.classList.add('border-red-500');
+                document.getElementById(errorElementId).classList.remove('hidden');
+                valid = false;
+            } else {
+                field.classList.remove('border-red-500');
+                document.getElementById(errorElementId).classList.add('hidden');
+            }
+        }
+
+        // Validate each field
+        validateField(title, 'title-error');
+        validateField(description, 'description-error');
+        validateField(price, 'price-error');
+        validateField(location, 'location-error');
+        validateField(country, 'country-error');
+        validateField(category, 'category-error');
+
+        return valid;
+    }
+</script>
